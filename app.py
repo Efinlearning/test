@@ -1,13 +1,19 @@
 from flask import Flask, render_template, request, redirect, flash
 from pymongo import MongoClient
 import bcrypt
+from urllib.parse import quote_plus
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
 
 # MongoDB connection
-client = MongoClient("mongodb+srv://KP025M:Mitra@1230@cluster0.mongodb.net/Usercred?retryWrites=true&w=majority")
-db = client["Usercred"]
+username = quote_plus('')
+password = quote_plus('')
+MONGO_URI = f'mongodb://{username}:{password}@cluster0-shard-00-00.mongodb.net:27017,cluster0-shard-00-01.mongodb.net:27017,cluster0-shard-00-02.mongodb.net:27017/Usercred?retryWrites=true&w=majority'
+DB_NAME = "Username"
+
+client = MongoClient(MONGO_URI)
+db = client[DB_NAME]
 users_collection = db["users"]
 
 @app.route("/signup", methods=["GET", "POST"])
