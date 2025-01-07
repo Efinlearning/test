@@ -7,10 +7,10 @@ app = Flask(__name__)
 app.secret_key = 'your_secret_key'
 
 # MongoDB connection
-username = quote_plus('')
-password = quote_plus('')
+username = quote_plus('your_username')  # Add your MongoDB username
+password = quote_plus('your_password')  # Add your MongoDB password
 MONGO_URI = f'mongodb://{username}:{password}@cluster0-shard-00-00.mongodb.net:27017,cluster0-shard-00-01.mongodb.net:27017,cluster0-shard-00-02.mongodb.net:27017/Usercred?retryWrites=true&w=majority'
-DB_NAME = "Username"
+DB_NAME = "Usercred"  # Ensure the correct database name
 
 client = MongoClient(MONGO_URI)
 db = client[DB_NAME]
@@ -49,3 +49,4 @@ def signup():
 
 if __name__ == "__main__":
     app.run(debug=True)
+        
