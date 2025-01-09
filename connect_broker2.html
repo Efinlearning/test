@@ -1,0 +1,54 @@
+<!-- connect_broker.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connect Broker</title>
+</head>
+<body>
+    <h1>Connect a Broker</h1>
+
+    <!-- Display Existing Brokers -->
+    {% if brokers %}
+    <h2>Your Connected Brokers</h2>
+    <ul>
+        {% for broker in brokers %}
+        <li>
+            <strong>Broker:</strong> {{ broker.broker_name }}<br>
+            <strong>API Key:</strong> {{ broker.api_key }}<br>
+            <strong>Secret Key:</strong> {{ broker.secret_key }}<br>
+            <strong>Redirect URL:</strong> {{ broker.redirect_url }}
+        </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    <h2>Add or Update Broker</h2>
+    <form method="POST">
+        <label for="broker_name">Choose Broker:</label>
+        <select id="broker_name" name="broker_name" required>
+            <option value="Zerodha">Zerodha</option>
+            <option value="Dhan">Dhan</option>
+            <option value="Upstox">Upstox</option>
+        </select>
+        <br><br>
+
+        <label for="api_key">API Key:</label>
+        <input type="text" id="api_key" name="api_key" required>
+        <br><br>
+
+        <label for="secret_key">Secret Key:</label>
+        <input type="text" id="secret_key" name="secret_key" required>
+        <br><br>
+
+        <label for="redirect_url">Redirect URL:</label>
+        <input type="url" id="redirect_url" name="redirect_url" required>
+        <br><br>
+
+        <button type="submit">Save Broker Details</button>
+    </form>
+
+    <a href="{{ url_for('dashboard') }}">Back to Dashboard</a>
+</body>
+</html>
