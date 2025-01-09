@@ -1,108 +1,95 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Connect Your Broker</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    // Theme Toggle
-    function toggleTheme() {
-      const currentTheme = document.documentElement.getAttribute('data-theme');
-      const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-      document.documentElement.setAttribute('data-theme', newTheme);
-      localStorage.setItem('theme', newTheme); // Save theme to localStorage
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connect Your Broker</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@3.0.0/dist/full.css" rel="stylesheet">
+    <style>
+        body {
+            scrollbar-width: thin;
+            scrollbar-color: var(--tw-ring-color) transparent;
+        }
+        body::-webkit-scrollbar {
+            width: 8px;
+        }
+        body::-webkit-scrollbar-thumb {
+            background-color: var(--tw-ring-color);
+            border-radius: 4px;
+        }
+    </style>
+    <script>
+        // Toggle between dark and light mode
+        function toggleTheme() {
+            const html = document.documentElement;
+            const currentTheme = html.getAttribute("data-theme");
+            const newTheme = currentTheme === "light" ? "dark" : "light";
+            html.setAttribute("data-theme", newTheme);
+            localStorage.setItem("theme", newTheme); // Save theme preference
+        }
 
-    // Apply saved theme on page load
-    document.addEventListener("DOMContentLoaded", () => {
-      const savedTheme = localStorage.getItem("theme");
-      if (savedTheme) {
-        document.documentElement.setAttribute('data-theme', savedTheme);
-      }
-    });
-  </script>
-  <script src="https://cdn.jsdelivr.net/npm/daisyui"></script>
+        // Apply saved theme on page load
+        document.addEventListener("DOMContentLoaded", () => {
+            const savedTheme = localStorage.getItem("theme");
+            if (savedTheme) {
+                document.documentElement.setAttribute("data-theme", savedTheme);
+            }
+        });
+    </script>
 </head>
-<body class="bg-base-100 text-base-content">
-  <header class="px-4 py-4 bg-base-200 shadow-md">
-    <div class="flex justify-between items-center max-w-7xl mx-auto">
-      <h1 class="text-xl font-bold">EfinAlgo</h1>
-      <button class="btn btn-sm btn-outline" onclick="toggleTheme()">Toggle Theme</button>
-    </div>
-  </header>
+<body class="bg-base-200 min-h-screen flex items-center justify-center">
+    <div class="container mx-auto px-4">
+        <div class="flex flex-col md:flex-row justify-between items-center space-y-8 md:space-y-0">
+            <!-- Info Section -->
+            <div class="md:w-1/2 text-center md:text-left space-y-6">
+                <h2 class="text-4xl font-bold text-primary">
+                    Connect Your <span class="text-secondary">Broker</span>
+                </h2>
+                <p class="text-gray-600">
+                    Link your broker account to start executing trades through EfinAlgo's algorithmic trading platform.
+                </p>
+                <div>
+                    <p class="text-sm font-medium text-blue-500">Need Help?</p>
+                    <a href="https://t.me/@efinlearning" target="_blank" class="btn btn-info btn-sm mt-2">Contact on Telegram</a>
+                    <a href="mailto:efinalgo@gmail.com" class="btn btn-info btn-sm mt-2">Send an Email</a>
+                </div>
+            </div>
 
-  <main class="px-4 py-10 max-w-7xl mx-auto">
-    <div class="text-center">
-      <h2 class="text-2xl font-bold">
-        Connect Your <span class="text-primary">Broker</span>
-      </h2>
-      <p class="mt-2 text-sm text-base-content">
-        Link your broker account to start executing trades through EfinAlgo's algorithmic trading platform.
-      </p>
-    </div>
-
-    <div class="mt-10 flex flex-col lg:flex-row items-center justify-center gap-10">
-      <!-- Info Section -->
-      <div class="max-w-sm">
-        <div class="alert alert-info">
-          <span class="font-bold">Need Help?</span>
+            <!-- Form Section -->
+            <div class="md:w-1/2 mt-8 md:mt-0">
+                <div class="card w-full bg-base-100 shadow-xl">
+                    <div class="card-body">
+                        <h3 class="text-lg font-bold mb-4 text-center">Connect Your Broker Account</h3>
+                        <form class="space-y-4">
+                            <div>
+                                <label for="broker" class="block text-sm font-medium text-gray-700">Select Broker</label>
+                                <select id="broker" class="select select-bordered w-full mt-1">
+                                    <option>Fyers</option>
+                                    <option>Dhan</option>
+                                    <option>Upstox</option>
+                                    <option>Zerodha</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="username" class="block text-sm font-medium text-gray-700">Enter Username</label>
+                                <input type="text" id="username" placeholder="Username" class="input input-bordered w-full mt-1" required>
+                            </div>
+                            <div>
+                                <label for="apiKey" class="block text-sm font-medium text-gray-700">API Secret Key</label>
+                                <input type="password" id="apiKey" placeholder="API Secret Key" class="input input-bordered w-full mt-1" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-full">Connect Account</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
-        <p class="mt-4 text-sm text-base-content">
-          Reach out to us via Telegram or Email for assistance. We're here to help!
-        </p>
-        <div class="mt-4 space-y-2">
-          <!-- Telegram Button -->
-          <a href="https://t.me/@efinlearning" target="_blank" 
-             class="btn btn-outline btn-primary btn-block">
-            Contact on Telegram
-          </a>
-          <!-- Email Button -->
-          <a href="mailto: efinalgo@gmail.com" 
-             class="btn btn-outline btn-secondary btn-block">
-            Send an Email
-          </a>
-        </div>
-      </div>
-
-      <!-- Form Section -->
-      <div class="w-full max-w-md bg-base-200 p-6 rounded-lg shadow-md">
-        <h3 class="text-lg font-bold mb-4">Connect Your Broker Account</h3>
-        <form>
-          <div class="form-control mb-4">
-            <label class="label">
-              <span class="label-text">Select Broker</span>
-            </label>
-            <select class="select select-bordered">
-              <option>Fyers</option>
-              <option>Dhan</option>
-              <option>Upstox</option>
-              <option>Zerodha</option>
-            </select>
-          </div>
-
-          <div class="form-control mb-4">
-            <label class="label">
-              <span class="label-text">Enter Username</span>
-            </label>
-            <input type="text" placeholder="Username" class="input input-bordered" required>
-          </div>
-
-          <div class="form-control mb-4">
-            <label class="label">
-              <span class="label-text">API Secret Key</span>
-            </label>
-            <input type="password" placeholder="API Secret Key" class="input input-bordered" required>
-          </div>
-
-          <button class="btn btn-primary btn-block">Connect Account</button>
-        </form>
-      </div>
     </div>
-  </main>
 
-  <footer class="px-4 py-4 bg-base-200 text-center">
-    <p class="text-sm">© 2025 EfinAlgo. All rights reserved.</p>
-  </footer>
+    <!-- Theme Toggle Button -->
+    <button class="fixed bottom-5 right-5 btn btn-circle btn-secondary" onclick="toggleTheme()" title="Toggle Dark/Light Mode">
+        🌗
+    </button>
 </body>
 </html>
