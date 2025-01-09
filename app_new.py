@@ -94,7 +94,7 @@ def dashboard():
     return redirect(url_for('login'))
 
 @app.route('/add_broker', methods=['GET', 'POST'])
-def add_broker():
+def connect_broker():
     if 'user_name' not in session:
         return redirect(url_for('login'))
     
