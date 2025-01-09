@@ -1,41 +1,34 @@
 from flask import Flask, render_template, request, redirect, url_for, session
-from flask_pymongo import PyMongo
+from pymongo import MongoClient
 from werkzeug.security import generate_password_hash, check_password_hash
-import re
+import config
 
 app = Flask(__name__)
-app.secret_key = 'your_secret_key'
+app.secret_key = config.SECRET_KEY
 
-app.config["MONGO_URI"] = "your_mongodb_atlas_connection_string"
-mongo = PyMongo(app)
+# MongoDB Configuration
+client = MongoClient(config.MONGODB_URI)
+db = client['user_db']
+users_collection = db['users']
+
+# Routes
+@app.route('/')
+def home():
+    return redirect(url_for('login'))
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
     if request.method == 'POST':
         email = request.form['email']
         phone = request.form['phone']
-        password = request.form['password']
-        confirm_password = request.form['confirm_password']
+        password = generate_password_hash(request.form['password'])
 
-        if password != confirm_password:
-            return "Passwords do not match!"
+        # Check if the email already exists
+        if users_collection.find_one({'email': email}):
+            return "Email already registered."
 
-        if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
-            return "Invalid email address!"
-
-        if not re.match(r"^[0-9]{10}$", phone):
-            return "Invalid phone number!"
-
-        hashed_password = generate_password_hash(password)
-
-        user = {
-            'email': email,
-            'phone': phone,
-            'password': hashed_password
-        }
-
-        mongo.db.users.insert_one(user)
-
+        # Insert user into database
+        users_collection.insert_one({'email': email, 'phone': phone, 'password': password})
         return redirect(url_for('login'))
 
     return render_template('signup.html')
@@ -46,25 +39,20 @@ def login():
         email = request.form['email']
         password = request.form['password']
 
-        user = mongo.db.users.find_one({'email': email})
-
+        # Check user in database
+        user = users_collection.find_one({'email': email})
         if user and check_password_hash(user['password'], password):
-            session['user'] = email
+            session['user_name'] = user['email']  # Store user name in session
             return redirect(url_for('dashboard'))
-
-        return "Invalid email or password!"
+        else:
+            return "Invalid credentials."
 
     return render_template('login.html')
 
 @app.route('/dashboard')
 def dashboard():
-    if 'user' in session:
-        return f"Welcome {session['user']}! <br><a href='/logout'>Logout</a>"
-    return redirect(url_for('login'))
-
-@app.route('/logout')
-def logout():
-    session.pop('user', None)
+    if 'user_name' in session:
+        return render_template('dashboard.html', name=session['user_name'])
     return redirect(url_for('login'))
 
 if __name__ == '__main__':
