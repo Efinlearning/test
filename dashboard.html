@@ -8,7 +8,7 @@
 </head>
 <body>
     <h1>Welcome, {{ name }}</h1>
-    <button onclick="window.location.href='{{ url_for('add_broker') }}'">Add Broker</button>
+    <button onclick="window.location.href='{{ url_for('connet_broker') }}'">Connect Broker</button>
     <button onclick="window.location.href='{{ url_for('generate_access_token_page') }}'">Generate Access Token</button>
     <a href="{{ url_for('logout') }}">Logout</a>
 </body>
