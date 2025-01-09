@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Connect Your Broker</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    // Theme Toggle
+    function toggleTheme() {
+      const currentTheme = document.documentElement.getAttribute('data-theme');
+      const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme); // Save theme to localStorage
+    }
+
+    // Apply saved theme on page load
+    document.addEventListener("DOMContentLoaded", () => {
+      const savedTheme = localStorage.getItem("theme");
+      if (savedTheme) {
+        document.documentElement.setAttribute('data-theme', savedTheme);
+      }
+    });
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/daisyui"></script>
+</head>
+<body class="bg-base-100 text-base-content">
+  <header class="px-4 py-4 bg-base-200 shadow-md">
+    <div class="flex justify-between items-center max-w-7xl mx-auto">
+      <h1 class="text-xl font-bold">OpenAlgo</h1>
+      <button class="btn btn-sm btn-outline" onclick="toggleTheme()">Toggle Theme</button>
+    </div>
+  </header>
+
+  <main class="px-4 py-10 max-w-7xl mx-auto">
+    <div class="text-center">
+      <h2 class="text-2xl font-bold">
+        Connect Your <span class="text-primary">Broker</span>
+      </h2>
+      <p class="mt-2 text-sm text-base-content">
+        Link your trading account to start executing trades through OpenAlgo's algorithmic trading platform.
+      </p>
+    </div>
+
+    <div class="mt-10 flex flex-col lg:flex-row items-center justify-center gap-10">
+      <!-- Info Section -->
+      <div class="max-w-sm">
+        <div class="alert alert-info">
+          <span class="font-bold">Need Help?</span>
+        </div>
+        <p class="mt-4 text-sm text-base-content">
+          Reach out to us via Telegram or Email for assistance. We're here to help!
+        </p>
+        <div class="mt-4 space-y-2">
+          <!-- Telegram Button -->
+          <a href="https://t.me/yourTelegramID" target="_blank" 
+             class="btn btn-outline btn-primary btn-block">
+            Contact on Telegram
+          </a>
+          <!-- Email Button -->
+          <a href="mailto:yourname@example.com" 
+             class="btn btn-outline btn-secondary btn-block">
+            Send an Email
+          </a>
+        </div>
+      </div>
+
+      <!-- Form Section -->
+      <div class="w-full max-w-md bg-base-200 p-6 rounded-lg shadow-md">
+        <h3 class="text-lg font-bold mb-4">Connect Your Trading Account</h3>
+        <form>
+          <div class="form-control mb-4">
+            <label class="label">
+              <span class="label-text">Select Broker</span>
+            </label>
+            <select class="select select-bordered">
+              <option>Fyers</option>
+              <option>Dhan</option>
+              <option>Upstox</option>
+              <option>Zerodha</option>
+            </select>
+          </div>
+
+          <div class="form-control mb-4">
+            <label class="label">
+              <span class="label-text">Enter Username</span>
+            </label>
+            <input type="text" placeholder="Username" class="input input-bordered" required>
+          </div>
+
+          <div class="form-control mb-4">
+            <label class="label">
+              <span class="label-text">API Secret Key</span>
+            </label>
+            <input type="password" placeholder="API Secret Key" class="input input-bordered" required>
+          </div>
+
+          <button class="btn btn-primary btn-block">Connect Account</button>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <footer class="px-4 py-4 bg-base-200 text-center">
+    <p class="text-sm">© 2025 OpenAlgo. All rights reserved.</p>
+  </footer>
+</body>
+</html>
