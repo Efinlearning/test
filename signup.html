@@ -1,52 +1,66 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Signup</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            plugins: [require('daisyui')],
+            daisyui: {
+                themes: ["light", "dark"],
+            },
+        };
+        function toggleTheme() {
+            const currentTheme = document.documentElement.getAttribute("data-theme");
+            document.documentElement.setAttribute("data-theme", currentTheme === "light" ? "dark" : "light");
+        }
+        function validateForm(event) {
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+            if (password !== confirmPassword) {
+                event.preventDefault();
+                alert("Passwords do not match!");
+            }
+        }
+    </script>
 </head>
-<body class="bg-gray-100 flex items-center justify-center min-h-screen">
-    <div class="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-lg">
-        <h1 class="text-3xl font-bold text-center text-gray-700">Create an Account</h1>
-        
-        <!-- Flash Messages -->
-        {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-            <div>
-                {% for category, message in messages %}
-                    <p class="text-{{ 'green' if category == 'success' else 'red' }}-500 text-center font-medium">
-                        {{ message }}
-                    </p>
-                {% endfor %}
-            </div>
-        {% endif %}
-        {% endwith %}
-
-        <!-- Signup Form -->
-        <form class="space-y-4" action="/signup" method="POST" novalidate>
-            <div>
-                <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
-                <input type="email" name="email" id="email" required
-                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400">
-            </div>
-            <div>
-                <label for="phone" class="block text-sm font-medium text-gray-700">Phone</label>
-                <input type="tel" name="phone" id="phone" pattern="[0-9]{10}" required
-                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400">
-                <p class="text-sm text-gray-500 mt-1">Format: 10 digits</p>
-            </div>
-            <div>
-                <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
-                <input type="password" name="password" id="password" minlength="6" required
-                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400">
-                <p class="text-sm text-gray-500 mt-1">Must be at least 6 characters long.</p>
-            </div>
-            <button type="submit"
-                class="w-full px-4 py-2 text-white bg-blue-500 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400">
-                Sign Up
+<body class="bg-base-200 flex items-center justify-center min-h-screen">
+    <div class="bg-base-100 p-8 rounded-lg shadow-lg w-96">
+        <div class="flex justify-between items-center mb-6">
+            <h1 class="text-2xl font-bold">Signup</h1>
+            <button onclick="toggleTheme()" class="btn btn-sm btn-outline">
+                Toggle Theme
             </button>
+        </div>
+        <form action="/signup" method="post" class="space-y-4" onsubmit="validateForm(event)">
+            <div>
+                <label for="email" class="block text-sm font-medium">Email</label>
+                <input type="email" id="email" name="email" class="input input-bordered w-full" required>
+            </div>
+            <div>
+                <label for="phone" class="block text-sm font-medium">Phone</label>
+                <input type="text" id="phone" name="phone" pattern="^[0-9]{10}$" 
+                       title="Enter a valid 10-digit phone number" 
+                       class="input input-bordered w-full" required>
+            </div>
+            <div>
+                <label for="password" class="block text-sm font-medium">Password</label>
+                <input type="password" id="password" name="password" minlength="8" 
+                       class="input input-bordered w-full" required>
+            </div>
+            <div>
+                <label for="confirm-password" class="block text-sm font-medium">Confirm Password</label>
+                <input type="password" id="confirm-password" name="confirm-password" 
+                       class="input input-bordered w-full" required>
+            </div>
+            <button type="submit" class="btn btn-primary w-full">Signup</button>
         </form>
+        <p class="text-sm text-center mt-4">
+            Already have an account? 
+            <a href="/signin" class="text-primary hover:underline">Sign in</a>
+        </p>
     </div>
 </body>
 </html>
